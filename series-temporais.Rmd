@@ -1,0 +1,60 @@
+---
+title: "Séries temporais"
+---
+
+```{r}
+#install.packages("forecast")
+library(forecast)
+```
+
+```{r}
+AirPassengers
+start(AirPassengers)
+end(AirPassengers)
+frequency(AirPassengers)
+```
+
+```{r}
+plot(AirPassengers) #série temporal em si
+plot(aggregate(AirPassengers)) #tendência
+```
+
+```{r}
+subst = window(AirPassengers, start=c(1960,1), end=c(1960,12))
+subst
+plot(subst)
+```
+Decomposição
+```{r}
+dec = decompose(AirPassengers)
+dec
+```
+```{r}
+attributes(dec)
+dec$seasonal
+```
+```{r}
+plot(dec)
+plot(dec$x)
+plot(dec$seasonal)
+plot(dec$trend)
+plot(dec$random)
+```
+Previsão
+```{r}
+ets = ets(AirPassengers) #observações mais recentes tem influência maior sobre as previsões
+ets
+```
+```{r}
+previsao = forecast(ets, h=12)
+plot(previsao)
+```
+```{r}
+arima = auto.arima(AirPassengers)
+arima
+```
+```{r}
+previsao = forecast(arima, h=12)
+plot(previsao)
+```
+
